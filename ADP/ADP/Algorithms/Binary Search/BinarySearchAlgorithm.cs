@@ -1,4 +1,4 @@
-﻿namespace ADP.Algorithms.Binary_Search
+﻿namespace ADP.Algorithms.BinarySearch
 {
     public static class BinarySearchAlgorithm
     {
