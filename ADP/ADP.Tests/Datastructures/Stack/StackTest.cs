@@ -14,6 +14,10 @@ public class StackTest
         }
     }
 
+    // Push is O(1) constant.
+    // There is no use in testing performance due to it always adding to the head
+    // The head node always holds the first item
+    // Last in first out
     [Fact]
     public void TestPush()
     {
@@ -29,6 +33,10 @@ public class StackTest
         result.ShouldBeEquivalentTo(valueToPush);
     }
 
+    // Pop is O(1) constant.
+    // There is no use in testing performance due to it always adding to the head
+    // The head node always holds the first item
+    // Last in first out
     [Fact]
     public void TestPop()
     {
@@ -43,6 +51,10 @@ public class StackTest
         _stack.Top().ShouldNotBe(topValue);
     }
 
+    // Top is O(1) constant.
+    // There is no use in testing performance due to it always adding to the head
+    // The head node always holds the first item
+    // Last in first out
     [Fact]
     public void TestTop()
     {

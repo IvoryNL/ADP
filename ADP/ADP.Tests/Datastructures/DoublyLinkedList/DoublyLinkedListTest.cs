@@ -1,20 +1,25 @@
-﻿using ADP.Datastructures.DoublyLinkedList;
+﻿using System.Diagnostics;
+using ADP.Datastructures.DoublyLinkedList;
 using Shouldly;
+using Xunit.Abstractions;
 
 namespace ADP.Tests.DoublyLinkedList;
 
 public class DoublyLinkedListTest
 {
-    private readonly DoublyLinkedList<int> _doublyLinkedList = new();
-        
-    public DoublyLinkedListTest()
+    private readonly DoublyLinkedList<int> _doublyLinkedList;
+    private readonly ITestOutputHelper _testOutputHelper;
+    
+    public DoublyLinkedListTest(ITestOutputHelper testOutputHelper)
     {
-        foreach (var item in DataSetSorterenHelper.LijstOplopend10000)
-        {
-            _doublyLinkedList.Add(item);
-        }
+        _testOutputHelper = testOutputHelper;
+
+        _doublyLinkedList = GenerateDoublyLinkedList(DataSetSorterenHelper.LijstWillekeurig100);
     }
 
+    // Add is O(1) constant.
+    // There is no use in testing performance due to it always adding the new node to the head node
+    // The head node always holds the most left item
     [Fact]
     public void TestAdd()
     {
@@ -42,6 +47,28 @@ public class DoublyLinkedListTest
         // Assert
         result.ShouldBeEquivalentTo(DataSetSorterenHelper.LijstOplopend10000[indexToMatch]);
     }
+    
+    // This test show that the time complexity is O(N) linear
+    // It has to visit one node at a time to find the value
+    // Ignore the first console output due to startup time
+    [Theory]
+    [MemberData(nameof(Data))]
+    public void TestGetValuePerformance(List<int> input)
+    {
+        // Arrange
+        var doublyLinkedList = GenerateDoublyLinkedList(input.ToArray());
+        var valueToFind = input[^1];
+        var stopwatch = new Stopwatch();
+
+        // Act
+        _testOutputHelper.WriteLine($"GetValue performance");
+        stopwatch.Start();
+        var result = doublyLinkedList.GetValue(valueToFind);
+        stopwatch.Stop();
+        _testOutputHelper.WriteLine($"Elapsed time {stopwatch.Elapsed}");
+        
+        // Assert
+    }
 
     [Fact]
     public void TestSetValue()
@@ -56,6 +83,29 @@ public class DoublyLinkedListTest
         // Assert
         var result = _doublyLinkedList.GetValue(indexToAddValue);
         result.ShouldBeEquivalentTo(valueToAdd);
+    }
+    
+    // This test show that the time complexity is O(N) linear
+    // It has to visit one node at a time to find the value
+    // Ignore the first console output due to startup time
+    [Theory]
+    [MemberData(nameof(Data))]
+    public void TestSetValuePerformance(List<int> input)
+    {
+        // Arrange
+        var doublyLinkedList = GenerateDoublyLinkedList(input.ToArray());
+        var lastIndex = input.Count - 1;
+        var valueToSet = 4;
+        var stopwatch = new Stopwatch();
+
+        // Act
+        _testOutputHelper.WriteLine($"SetValue performance");
+        stopwatch.Start();
+        doublyLinkedList.SetValue(lastIndex, valueToSet);
+        stopwatch.Stop();
+        _testOutputHelper.WriteLine($"Elapsed time {stopwatch.Elapsed}");
+        
+        // Assert
     }
 
     [Fact]
@@ -72,6 +122,28 @@ public class DoublyLinkedListTest
         var result = _doublyLinkedList.GetValue(indexOfValueToRemove);
         result.ShouldNotBe(valueToRemove);
     }
+    
+    // This test show that the time complexity is O(N) linear
+    // It has to visit one node at a time to find the value
+    // Ignore the first console output due to startup time
+    [Theory]
+    [MemberData(nameof(Data))]
+    public void TestRemovePerformance(List<int> input)
+    {
+        // Arrange
+        var doublyLinkedList = GenerateDoublyLinkedList(input.ToArray());
+        var valueToRemove = input[0];
+        var stopwatch = new Stopwatch();
+
+        // Act
+        _testOutputHelper.WriteLine($"Remove performance");
+        stopwatch.Start();
+        doublyLinkedList.Remove(valueToRemove);
+        stopwatch.Stop();
+        _testOutputHelper.WriteLine($"Elapsed time {stopwatch.Elapsed}");
+        
+        // Assert
+    }
         
     [Fact]
     public void TestRemoveAt()
@@ -81,11 +153,33 @@ public class DoublyLinkedListTest
         var indexOfValueToRemove = _doublyLinkedList.IndexOf(valueToRemove);
 
         // Act
-        _doublyLinkedList.RemoveAt(indexOfValueToRemove);            
-
+        _doublyLinkedList.RemoveAt(indexOfValueToRemove);
+        
         // Assert
         var result = _doublyLinkedList.GetValue(indexOfValueToRemove);
         result.ShouldNotBe(valueToRemove);
+    }
+    
+    // This test show that the time complexity is O(N) linear
+    // It has to visit one node at a time to find the value
+    // Ignore the first console output due to startup time
+    [Theory]
+    [MemberData(nameof(Data))]
+    public void TestRemoveAtPerformance(List<int> input)
+    {
+        // Arrange
+        var doublyLinkedList = GenerateDoublyLinkedList(input.ToArray());
+        var lastIndex = input.Count - 1;
+        var stopwatch = new Stopwatch();
+
+        // Act
+        _testOutputHelper.WriteLine($"RemoveAt performance");
+        stopwatch.Start();
+        doublyLinkedList.RemoveAt(lastIndex);
+        stopwatch.Stop();
+        _testOutputHelper.WriteLine($"Elapsed time {stopwatch.Elapsed}");
+        
+        // Assert
     }
 
     [Fact]
@@ -113,7 +207,28 @@ public class DoublyLinkedListTest
         // Assert
         result.ShouldBeFalse();
     }
+    
+    // This test show that the time complexity is O(N) linear
+    // It has to visit one node at a time to find the value
+    // Ignore the first console output due to startup time
+    [Theory]
+    [MemberData(nameof(Data))]
+    public void TestContainsPerformance(List<int> input)
+    {
+        // Arrange
+        var doublyLinkedList = GenerateDoublyLinkedList(input.ToArray());
+        var valueToFind = input[0];
+        var stopwatch = new Stopwatch();
 
+        // Act
+        _testOutputHelper.WriteLine($"Contains performance");
+        stopwatch.Start();
+        var result = doublyLinkedList.Contains(valueToFind);
+        stopwatch.Stop();
+        _testOutputHelper.WriteLine($"Elapsed time {stopwatch.Elapsed}");
+        
+        // Assert
+    }
 
     [Fact]
     public void TestIndexOf()
@@ -127,5 +242,46 @@ public class DoublyLinkedListTest
 
         // Assert
         result.ShouldBeEquivalentTo(indexOfValueToCheck);
+    }
+    
+    // This test show that the time complexity is O(N) linear
+    // It has to visit one node at a time to find the value
+    // Ignore the first console output due to startup time
+    [Theory]
+    [MemberData(nameof(Data))]
+    public void TestIndexOfPerformance(List<int> input)
+    {
+        // Arrange
+        var doublyLinkedList = GenerateDoublyLinkedList(input.ToArray());
+        var valueToFind = input[0];
+        var stopwatch = new Stopwatch();
+
+        // Act
+        _testOutputHelper.WriteLine($"IndexOf performance");
+        stopwatch.Start();
+        var result = doublyLinkedList.IndexOf(valueToFind);
+        stopwatch.Stop();
+        _testOutputHelper.WriteLine($"Elapsed time {stopwatch.Elapsed}");
+        
+        // Assert
+    }
+
+    private DoublyLinkedList<int> GenerateDoublyLinkedList(int[] data)
+    {
+        var doublyLinkedList = new DoublyLinkedList<int>();
+        
+        foreach (var item in data)
+        {
+            doublyLinkedList.Add(item);
+        }
+
+        return doublyLinkedList;
+    }
+    
+    public static IEnumerable<object[]> Data(){
+        // Used for startup due to the first time being inaccurate
+        yield return new object[] { DataSetSorterenHelper.LijstWillekeurig3.ToList() };
+        yield return new object[] { DataSetSorterenHelper.LijstWillekeurig100.ToList() };
+        yield return new object[] { DataSetSorterenHelper.LijstWillekeurig1000.ToList() };
     }
 }

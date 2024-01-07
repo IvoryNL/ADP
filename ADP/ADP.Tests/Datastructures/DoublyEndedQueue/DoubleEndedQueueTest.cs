@@ -14,7 +14,10 @@ public class DoubleEndedQueueTest
             _doubleEndedQueue.InsertLeft(item);
         }
     }
-
+    
+    // InsertLeft is O(1) constant.
+    // There is no use in testing performance due to it always adding the new node to the head node
+    // The head node always holds the most left item
     [Fact]
     public void TestInsertLeft()
     {
@@ -28,6 +31,9 @@ public class DoubleEndedQueueTest
         _doubleEndedQueue.PeekLeft().ShouldBeEquivalentTo(valueToInsert);
     }
     
+    // DeleteLeft is O(1) constant.
+    // There is no use in testing performance due to it always returning the head node
+    // The head node always holds the most left item
     [Fact]
     public void TestDeleteLeft()
     {
@@ -42,6 +48,9 @@ public class DoubleEndedQueueTest
         _doubleEndedQueue.PeekLeft().ShouldNotBe(valueThatWillBeDeleted);
     }
     
+    // InsertRight is O(1) constant.
+    // There is no use in testing performance due to it always adding the new node to the tail node
+    // The tail node always holds the most right item
     [Fact]
     public void TestInsertRight()
     {
@@ -55,6 +64,9 @@ public class DoubleEndedQueueTest
         _doubleEndedQueue.PeekRight().ShouldBeEquivalentTo(valueToInsert);
     }
     
+    // DeleteRight is O(1) constant.
+    // There is no use in testing performance due to it always returning the tail node
+    // The tail node always holds the most right item
     [Fact]
     public void TestDeleteRight()
     {
