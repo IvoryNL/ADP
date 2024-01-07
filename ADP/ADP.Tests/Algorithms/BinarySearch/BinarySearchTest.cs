@@ -13,11 +13,11 @@ public class BinarySearchTest
         _testOutputHelper = testOutputHelper;
     }
     
+    // This test show that the time complexity is O(log N) logarithmic
+    // Even when the data grows X times the runtime does not due to divide and conquer
+    // Ignore the first console output due to startup time
     [Theory]
-    [MemberData(nameof(Data1))]
-    [MemberData(nameof(Data2))]
-    [MemberData(nameof(Data3))]
-    [MemberData(nameof(Data4))]
+    [MemberData(nameof(Data))]
     public void TestBinarySearch(List<int> input, int numberToFind)
     {
         // Arrange
@@ -34,19 +34,11 @@ public class BinarySearchTest
         result.ShouldBeEquivalentTo(numberToFind - 1);
     }
     
-    public static IEnumerable<object[]> Data1(){
+    public static IEnumerable<object[]> Data(){
+        // Used for startup due to the first time being inaccurate
         yield return new object[] { Enumerable.Range(1, 10).ToList(), 1 };
-    }
-    
-    public static IEnumerable<object[]> Data2(){
         yield return new object[] { Enumerable.Range(1, 100000).ToList(), 1 };
-    }
-    
-    public static IEnumerable<object[]> Data3(){
         yield return new object[] { Enumerable.Range(1, 10000000).ToList(), 1 };
-    }
-    
-    public static IEnumerable<object[]> Data4(){
         yield return new object[] { Enumerable.Range(1, 2000000000).ToList(), 1 };
     }
 }

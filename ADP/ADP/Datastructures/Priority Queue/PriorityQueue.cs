@@ -107,9 +107,7 @@
 
         private void Swap(int firstIndex, int secondIndex)
         {
-            var temp = _heap[firstIndex];
-            _heap[firstIndex] = _heap[secondIndex];
-            _heap[secondIndex] = temp;
+            (_heap[firstIndex], _heap[secondIndex]) = (_heap[secondIndex], _heap[firstIndex]);
         }
     }
 }
