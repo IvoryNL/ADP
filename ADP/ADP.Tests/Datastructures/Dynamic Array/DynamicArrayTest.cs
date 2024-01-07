@@ -1,20 +1,26 @@
-﻿using ADP.Datastructures.DynamicArray;
+﻿using System.Diagnostics;
+using ADP.Datastructures.DynamicArray;
 using Shouldly;
+using Xunit.Abstractions;
 
 namespace ADP.Tests.Dynamic_Array;
 
 public class DynamicArrayTest
 {
-    private readonly DynamicArray<int> _dynamicArray = new();
+    private readonly DynamicArray<int> _dynamicArray;
+    private readonly ITestOutputHelper _testOutputHelper;
         
-    public DynamicArrayTest()
+    public DynamicArrayTest(ITestOutputHelper testOutputHelper)
     {
-        foreach (var item in DataSetSorterenHelper.LijstOplopend10000)
-        {
-            _dynamicArray.Add(item);
-        }
+        _testOutputHelper = testOutputHelper;
+        
+        _dynamicArray = GenerateDynamicArray(DataSetSorterenHelper.LijstOplopend10000);
     }
 
+    // Add is O(1) most of the time
+    // The factor that affects the time complexity is the resize array grow or shrink array
+    // These operations are costly due to allocation a new array in memory and copying all the items to the new array
+    // A grow factor of 2 and a shrink factor of 4 is chosen for the best balance
     [Fact]
     public void TestAdd()
     {
@@ -43,6 +49,10 @@ public class DynamicArrayTest
         result.ShouldBeEquivalentTo(DataSetSorterenHelper.LijstOplopend10000[indexToMatch]);
     }
 
+    // SetValue is O(1) most of the time
+    // The factor that affects the time complexity is the resize array grow or shrink array
+    // These operations are costly due to allocation a new array in memory and copying all the items to the new array
+    // A grow factor of 2 and a shrink factor of 4 is chosen for the best balance
     [Fact]
     public void TestSetValue()
     {
@@ -57,7 +67,7 @@ public class DynamicArrayTest
         var result = _dynamicArray.GetValue(indexToAddValue);
         result.ShouldBeEquivalentTo(valueToAdd);
     }
-
+    
     [Fact]
     public void TestRemove()
     {
@@ -72,7 +82,33 @@ public class DynamicArrayTest
         var result = _dynamicArray.GetValue(indexOfValueToRemove);
         result.ShouldNotBe(valueToRemove);
     }
+    
+    // This test show that the time complexity is O(N) linear
+    // It has to visit one node at a time to find the value
+    // Ignore the first console output due to startup time
+    [Theory]
+    [MemberData(nameof(Data))]
+    public void TestRemovePerformance(List<int> input)
+    {
+        // Arrange
+        var dynamicArray = GenerateDynamicArray(input.ToArray());
+        var valueToFind = input[^1];
+        var stopwatch = new Stopwatch();
+
+        // Act
+        _testOutputHelper.WriteLine($"Remove performance");
+        stopwatch.Start();
+        dynamicArray.Remove(valueToFind);
+        stopwatch.Stop();
+        _testOutputHelper.WriteLine($"Elapsed time {stopwatch.Elapsed}");
         
+        // Assert
+    }
+    
+    // RemoveAt is O(1) most of the time
+    // The factor that affects the time complexity is the resize array grow or shrink array
+    // These operations are costly due to allocation a new array in memory and copying all the items to the new array
+    // A grow factor of 2 and a shrink factor of 4 is chosen for the best balance
     [Fact]
     public void TestRemoveAt()
     {
@@ -113,8 +149,29 @@ public class DynamicArrayTest
         // Assert
         result.ShouldBeFalse();
     }
+    
+    // This test show that the time complexity is O(N) linear
+    // It has to visit one node at a time to find the value
+    // Ignore the first console output due to startup time
+    [Theory]
+    [MemberData(nameof(Data))]
+    public void TestContainsPerformance(List<int> input)
+    {
+        // Arrange
+        var dynamicArray = GenerateDynamicArray(input.ToArray());
+        var valueToFind = input[0];
+        var stopwatch = new Stopwatch();
 
-
+        // Act
+        _testOutputHelper.WriteLine($"Contains performance");
+        stopwatch.Start();
+        var result = dynamicArray.Contains(valueToFind);
+        stopwatch.Stop();
+        _testOutputHelper.WriteLine($"Elapsed time {stopwatch.Elapsed}");
+        
+        // Assert
+    }
+    
     [Fact]
     public void TestIndexOf()
     {
@@ -127,5 +184,46 @@ public class DynamicArrayTest
 
         // Assert
         result.ShouldBeEquivalentTo(indexOfValueToCheck);
+    }
+    
+    // This test show that the time complexity is O(N) linear
+    // It has to visit one node at a time to find the value
+    // Ignore the first console output due to startup time
+    [Theory]
+    [MemberData(nameof(Data))]
+    public void TestIndexOfPerformance(List<int> input)
+    {
+        // Arrange
+        var dynamicArray = GenerateDynamicArray(input.ToArray());
+        var valueToFind = input[0];
+        var stopwatch = new Stopwatch();
+
+        // Act
+        _testOutputHelper.WriteLine($"IndexOf performance");
+        stopwatch.Start();
+        var result = dynamicArray.IndexOf(valueToFind);
+        stopwatch.Stop();
+        _testOutputHelper.WriteLine($"Elapsed time {stopwatch.Elapsed}");
+        
+        // Assert
+    }
+    
+    private static DynamicArray<int> GenerateDynamicArray(int[] data)
+    {
+        var dynamicArray = new DynamicArray<int>();
+        
+        foreach (var item in data)
+        {
+            dynamicArray.Add(item);
+        }
+
+        return dynamicArray;
+    }
+    
+    public static IEnumerable<object[]> Data(){
+        // Used for startup due to the first time being inaccurate
+        yield return new object[] { DataSetSorterenHelper.LijstWillekeurig3.ToList() };
+        yield return new object[] { DataSetSorterenHelper.LijstWillekeurig100.ToList() };
+        yield return new object[] { DataSetSorterenHelper.LijstWillekeurig1000.ToList() };
     }
 }

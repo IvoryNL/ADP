@@ -14,7 +14,7 @@ public class DoublyLinkedListTest
     {
         _testOutputHelper = testOutputHelper;
 
-        _doublyLinkedList = GenerateDoublyLinkedList(DataSetSorterenHelper.LijstWillekeurig100);
+        _doublyLinkedList = GenerateDoublyLinkedList(DataSetSorterenHelper.LijstOplopend10000);
     }
 
     // Add is O(1) constant.
@@ -234,7 +234,7 @@ public class DoublyLinkedListTest
     public void TestIndexOf()
     {
         // Arrange
-        var valueToCheck = DataSetSorterenHelper.LijstWillekeurig100[^1];
+        var valueToCheck = DataSetSorterenHelper.LijstOplopend10000[^1];
         var indexOfValueToCheck = 0;
 
         // Act
