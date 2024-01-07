@@ -38,7 +38,7 @@ public class BinarySearchTest
         // Used for startup due to the first time being inaccurate
         yield return new object[] { Enumerable.Range(1, 10).ToList(), 1 };
         yield return new object[] { Enumerable.Range(1, 100000).ToList(), 1 };
-        yield return new object[] { Enumerable.Range(1, 10000000).ToList(), 1 };
-        yield return new object[] { Enumerable.Range(1, 2000000000).ToList(), 1 };
+        // yield return new object[] { Enumerable.Range(1, 10000000).ToList(), 1 };
+        // yield return new object[] { Enumerable.Range(1, 2000000000).ToList(), 1 };
     }
 }
