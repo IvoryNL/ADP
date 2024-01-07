@@ -55,6 +55,16 @@
 
             return data;
         }
+        
+        public T PeekLeft()
+        {
+            if (_head == null)
+            {
+                throw new InvalidOperationException("Queue is empty");
+            }
+            
+            return _head.Data;;
+        }
 
         public void InsertRight(T data)
         {
@@ -96,6 +106,16 @@
 
             _count--;
             return data;
+        }
+        
+        public T PeekRight()
+        {
+            if (_tail == null)
+            {
+                throw new InvalidOperationException("Queue is empty");
+            }
+            
+            return _tail.Data;;
         }
 
         public int Size()
