@@ -234,7 +234,7 @@ public class DoublyLinkedListTest
     public void TestIndexOf()
     {
         // Arrange
-        var valueToCheck = 9999;
+        var valueToCheck = DataSetSorterenHelper.LijstWillekeurig100[^1];
         var indexOfValueToCheck = 0;
 
         // Act
