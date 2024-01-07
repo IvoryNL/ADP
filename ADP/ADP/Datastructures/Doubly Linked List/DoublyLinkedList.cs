@@ -1,229 +1,241 @@
-﻿namespace ADP.Datastructures.DoublyLinkedList
+﻿namespace ADP.Datastructures.DoublyLinkedList;
+
+public class DoublyLinkedList<T>
 {
-    public class DoublyLinkedList<T>
+    private int _count = 0;
+    private Node<T>? Head { get; set; } = null;
+    private Node<T>? Tail { get; set; } = null;
+
+    public void Add(T data)
     {
-        private int _count;
-
-        public Node<T>? Head { get; set; }
-        public Node<T>? Tail { get; set; }
-
-        public DoublyLinkedList()
+        var newNode = new Node<T>(data);
+        
+        if (Head is null)
         {
-            _count = 0;
-            Head = null;
-            Tail = null;
+            Head = newNode;
+            Tail = newNode;
+        }
+        else
+        {
+            Head.Previous = newNode;
+            newNode.Next = Head;
+            Head = newNode;
         }
 
-        public void Add(Node<T> node)
+        _count++;
+    }
+    
+    public T GetValue(int index)
+    {
+        ValidateIndex(index);
+        ValidateNode(Head);
+
+        var counter = 0;
+        var node = Head;
+
+        while (node!.Next != null)
         {
-            if (Head is null)
+            if (index == counter)
             {
-                Head = node;
-                Tail = node;
-            }
-            else
-            {
-                Head.Previous = node;
-                node.Next = Head;
-                Head = node;
+                break;
             }
 
-            _count++;
+            node = node.Next;
+            counter++;
         }
 
-        public T GetValue(int index)
+        return node.Data;
+    }
+
+    public void SetValue(int index, T data)
+    {
+        ValidateNodeData(data);
+
+        var newNode = new Node<T>(data);
+
+        if (Head == null)
         {
-            ValidateIndex(index);
-            ValidateNode(Head);
+            Add(newNode);
 
-            var counter = 0;
-            var node = Head;
+            return;
+        }
 
-            while (node!.Next != null)
+        if (index > _count - 1)
+        {
+            newNode.Previous = Tail!;
+            Tail!.Next = newNode;
+            Tail = newNode;
+
+            return;
+        }
+
+        ValidateNode(Head);
+
+        var counter = 0;
+        var node = Head;
+
+        while (node!.Next != null)
+        {
+            if (index == counter)
             {
-                if (index == counter)
+                var previousNode = node.Previous;
+                var nextNode = node.Next;
+
+                if (previousNode != null)
                 {
-                    break;
+                    previousNode.Next = newNode;
                 }
 
-                node = node.Next;
-                counter++;
+                nextNode.Previous = newNode;
             }
 
-            return node.Data;
+            node = node.Next;
+            counter++;
+        }
+    }
+
+    public void Remove(T data)
+    {
+        ValidateNodeData(data);
+        ValidateNode(Head);
+
+        var currentNode = Head;
+
+        while (currentNode != null)
+        {
+            if (currentNode.Data != null && currentNode.Data.Equals(data))
+            {
+                break;
+            }
+
+            currentNode = currentNode.Next;
+        }
+        
+        RemoveNode(currentNode);
+    }
+
+    public void RemoveAt(int index)
+    {
+        ValidateNode(Head);
+
+        var counter = 0;
+        var currentNode = Head;
+
+        while (currentNode != null && counter < index)
+        {
+            currentNode = currentNode.Next;
+            counter++;
         }
 
-        public void SetValue(int index, T data)
+        RemoveNode(currentNode);
+    }
+
+    public bool Contains(T data)
+    {
+        ValidateNodeData(data);
+        ValidateNode(Head);
+
+        var index = 0;
+        var node = Head;
+
+        while (node!.Next != null)
         {
-            ValidateNodeData(data);
-
-            var newNode = new Node<T>(data);
-
-            if (Head == null)
+            if (node!.Data!.Equals(data))
             {
-                Add(newNode);
-
-                return;
+                return true;
             }
 
-            if (index > _count - 1)
-            {
-                newNode.Previous = Tail!;
-                Tail!.Next = newNode;
-                Tail = newNode;
-
-                return;
-            }
-
-            ValidateNode(Head);
-
-            var counter = 0;
-            var node = Head;
-
-            while (node!.Next != null)
-            {
-                if (index == counter)
-                {
-                    var previousNode = node.Previous;
-                    var nextNode = node.Next;
-
-                    if (previousNode != null)
-                    {
-                        previousNode.Next = newNode;
-                    }
-
-                    nextNode.Previous = newNode;
-                }
-
-                node = node.Next;
-                counter++;
-            }
+            node = node.Next;
+            index++;
         }
 
-        public void Remove(T data)
+        return false;
+    }
+
+    public int IndexOf(T data)
+    {
+        ValidateNodeData(data);
+        ValidateNode(Head);
+
+        var index = 0;
+        var node = Head;
+
+        while (node != null)
         {
-            ValidateNodeData(data);
-            ValidateNode(Head);
+            ValidateNodeData(node.Data);
 
-            var node = Head;
-
-            while (node!.Next != null)
+            if (node!.Data!.Equals(data))
             {
-                if (node.Data!.Equals(data))
-                {
-                    var previousNode = node.Previous;
-                    var nextNode = node.Next;
-
-                    if (previousNode != null)
-                    {
-                        previousNode.Next = nextNode;
-                    }
-
-                    node.Previous = previousNode;
-
-                    break;
-                }
-
-                node = node.Next;
+                return index;
             }
+
+            node = node.Next;
+            index++;
         }
 
-        public void RemoveAt(int index)
+        return -1;
+    }
+
+    private static void ValidateNode(Node<T>? node)
+    {
+        if (node == null)
         {
-            ValidateNode(Head);
+            throw new ArgumentException();
+        }
+    }
 
-            var counter = 0;
-            var node = Head;
+    private static void ValidateNodeData(T data)
+    {
+        if (data == null)
+        {
+            throw new ArgumentException();
+        }
+    }
 
-            while (node!.Next != null)
-            {
-                if (index == counter)
-                {
-                    var previousNode = node.Previous;
-                    var nextNode = node.Next;
-
-                    if (previousNode != null)
-                    {
-                        nextNode.Previous = nextNode;
-                    }
-
-                    nextNode.Previous = previousNode;
-
-                    break;
-                }
-
-                counter--;
-            }
+    private void ValidateIndex(int index)
+    {
+        if (index > _count - 1)
+        {
+            throw new IndexOutOfRangeException();
+        }
+    }
+    
+    private void Add(Node<T> node)
+    {
+        if (Head is null)
+        {
+            Head = node;
+            Tail = node;
+        }
+        else
+        {
+            Head.Previous = node;
+            node.Next = Head;
+            Head = node;
         }
 
-        public bool Contains(T data)
+        _count++;
+    }
+    
+    private void RemoveNode(Node<T>? currentNode)
+    {
+        if (currentNode == null)
         {
-            ValidateNodeData(data);
-            ValidateNode(Head);
-
-            var index = 0;
-            var node = Head;
-
-            while (node!.Next != null)
-            {
-                if (node!.Data!.Equals(data))
-                {
-                    return true;
-                }
-
-                node = node.Next;
-                index++;
-            }
-
-            return false;
+            throw new IndexOutOfRangeException();
         }
 
-        public int IndexOf(T data)
+        if (currentNode.Previous != null)
         {
-            ValidateNodeData(data);
-            ValidateNode(Head);
-
-            var index = 0;
-            var node = Head;
-
-            while (node != null)
-            {
-                ValidateNodeData(node.Data);
-
-                if (node!.Data!.Equals(data))
-                {
-                    return index;
-                }
-
-                node = node.Next;
-                index++;
-            }
-
-            return -1;
+            currentNode.Previous.Next = currentNode.Next;
+        }
+        else
+        {
+            Head = currentNode.Next;
         }
 
-        private static void ValidateNode(Node<T>? node)
+        if (currentNode.Next != null)
         {
-            if (node == null)
-            {
-                throw new ArgumentException();
-            }
-        }
-
-        private static void ValidateNodeData(T data)
-        {
-            if (data == null)
-            {
-                throw new ArgumentException();
-            }
-        }
-
-        private void ValidateIndex(int index)
-        {
-            if (index > _count - 1)
-            {
-                throw new IndexOutOfRangeException();
-            }
+            currentNode.Next.Previous = currentNode.Previous;
         }
     }
 }
