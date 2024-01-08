@@ -97,10 +97,12 @@ public class DynamicArrayTest
 
         // Act
         _testOutputHelper.WriteLine($"Remove performance");
+        Console.WriteLine($"Remove performance");
         stopwatch.Start();
         dynamicArray.Remove(valueToFind);
         stopwatch.Stop();
         _testOutputHelper.WriteLine($"Elapsed time {stopwatch.Elapsed}");
+        Console.WriteLine($"Elapsed time {stopwatch.Elapsed}");
         
         // Assert
     }
@@ -164,10 +166,12 @@ public class DynamicArrayTest
 
         // Act
         _testOutputHelper.WriteLine($"Contains performance");
+        Console.WriteLine($"Contains performance");
         stopwatch.Start();
         var result = dynamicArray.Contains(valueToFind);
         stopwatch.Stop();
         _testOutputHelper.WriteLine($"Elapsed time {stopwatch.Elapsed}");
+        Console.WriteLine($"Elapsed time {stopwatch.Elapsed}");
         
         // Assert
     }
@@ -200,10 +204,12 @@ public class DynamicArrayTest
 
         // Act
         _testOutputHelper.WriteLine($"IndexOf performance");
+        Console.WriteLine($"IndexOf performance");
         stopwatch.Start();
         var result = dynamicArray.IndexOf(valueToFind);
         stopwatch.Stop();
         _testOutputHelper.WriteLine($"Elapsed time {stopwatch.Elapsed}");
+        Console.WriteLine($"Elapsed time {stopwatch.Elapsed}");
         
         // Assert
     }

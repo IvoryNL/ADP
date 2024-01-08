@@ -24,11 +24,14 @@ public class BinarySearchTest
         var stopwatch = new Stopwatch();
         
         // Act
+        _testOutputHelper.WriteLine("Binary Search Performance Test");
+        Console.WriteLine("Binary Search Performance Test");
         stopwatch.Start();
         var result = BinarySearchAlgorithm.BinarySearch(input, numberToFind);
         stopwatch.Stop();
         
         _testOutputHelper.WriteLine($"Elapsed time {stopwatch.Elapsed}");
+        Console.WriteLine($"Elapsed time {stopwatch.Elapsed}");
         
         // Assert
         result.ShouldBeEquivalentTo(numberToFind - 1);
