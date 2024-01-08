@@ -43,7 +43,8 @@ public class PriorityQueueTest
 
         // Act
         _testOutputHelper.WriteLine($"Enqueue performance");
-        Console.WriteLine($"Enqueue performance");
+        Console.WriteLine("###############################");
+        Console.WriteLine("DOUBLY ENDED QUEUE ENQUEUE PERFORMANCE TEST");
         stopwatch.Start();
         foreach (var numberToEnqueue in input)
         {
@@ -52,6 +53,7 @@ public class PriorityQueueTest
         stopwatch.Stop();
         _testOutputHelper.WriteLine($"Elapsed time {stopwatch.Elapsed}");
         Console.WriteLine($"Elapsed time {stopwatch.Elapsed}");
+        Console.WriteLine("###############################");
         
         // Assert
     }
@@ -83,7 +85,8 @@ public class PriorityQueueTest
 
         // Act
         _testOutputHelper.WriteLine($"Dequeue performance");
-        Console.WriteLine($"Dequeue performance");
+        Console.WriteLine("###############################");
+        Console.WriteLine("DOUBLY ENDED QUEUE DEQUEUE PERFORMANCE TEST");
         stopwatch.Start();
         while (counter-- > 0)
         {
@@ -92,6 +95,7 @@ public class PriorityQueueTest
         stopwatch.Stop();
         _testOutputHelper.WriteLine($"Elapsed time {stopwatch.Elapsed}");
         Console.WriteLine($"Elapsed time {stopwatch.Elapsed}");
+        Console.WriteLine("###############################");
         
         // Assert
     }

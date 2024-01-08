@@ -25,13 +25,15 @@ public class BinarySearchTest
         
         // Act
         _testOutputHelper.WriteLine("Binary Search Performance Test");
-        Console.WriteLine("Binary Search Performance Test");
+        Console.WriteLine("###############################");
+        Console.WriteLine("BINARY SEARCH PERFORMANCE TEST");
         stopwatch.Start();
         var result = BinarySearchAlgorithm.BinarySearch(input, numberToFind);
         stopwatch.Stop();
         
         _testOutputHelper.WriteLine($"Elapsed time {stopwatch.Elapsed}");
         Console.WriteLine($"Elapsed time {stopwatch.Elapsed}");
+        Console.WriteLine("###############################");
         
         // Assert
         result.ShouldBeEquivalentTo(numberToFind - 1);
@@ -41,7 +43,7 @@ public class BinarySearchTest
         // Used for startup due to the first time being inaccurate
         yield return new object[] { Enumerable.Range(1, 10).ToList(), 1 };
         yield return new object[] { Enumerable.Range(1, 100000).ToList(), 1 };
-        // yield return new object[] { Enumerable.Range(1, 10000000).ToList(), 1 };
-        // yield return new object[] { Enumerable.Range(1, 2000000000).ToList(), 1 };
+        yield return new object[] { Enumerable.Range(1, 10000000).ToList(), 1 };
+        yield return new object[] { Enumerable.Range(1, 2000000000).ToList(), 1 };
     }
 }
