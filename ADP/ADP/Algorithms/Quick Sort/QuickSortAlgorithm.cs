@@ -2,7 +2,14 @@
 {
     public static class QuickSortAlgorithm
     {
-        public static void QuickSort(int[] inputCollection, int start, int end)
+        public static void QuickSort(int[] inputCollection)
+        {
+            var start = 0;
+            var end = inputCollection.Length - 1;
+            QuickSort(inputCollection, start, end);
+        }
+        
+        private static void QuickSort(int[] inputCollection, int start, int end)
         {
             if (start >= end)
             {
