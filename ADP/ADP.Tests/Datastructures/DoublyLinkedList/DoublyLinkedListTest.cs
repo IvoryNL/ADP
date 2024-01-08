@@ -62,10 +62,12 @@ public class DoublyLinkedListTest
 
         // Act
         _testOutputHelper.WriteLine($"GetValue performance");
+        Console.WriteLine($"GetValue performance");
         stopwatch.Start();
         var result = doublyLinkedList.GetValue(valueToFind);
         stopwatch.Stop();
         _testOutputHelper.WriteLine($"Elapsed time {stopwatch.Elapsed}");
+        Console.WriteLine($"Elapsed time {stopwatch.Elapsed}");
         
         // Assert
     }
