@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using ADP.Algorithms.QuickSort;
+using Shouldly;
 using Xunit.Abstractions;
 
 namespace ADP.Tests.Algorithms.QuickSort;
@@ -39,6 +40,31 @@ public class QuickSortTest
         // Assert
     }
     
+    [Theory]
+    [MemberData(nameof(DataDifferent))]
+    public void TestQuickSortDifferentSets(int[] input)
+    {
+        // Arrange
+        var expectedSortedInput = input.ToList();
+        expectedSortedInput.Sort();
+        
+        // Act
+        QuickSortAlgorithm.QuickSort(input);
+        
+        // Assert
+        input.ShouldBeEquivalentTo(expectedSortedInput.ToArray());
+    }
+    
+    public static IEnumerable<object[]> DataDifferent(){
+        // Used for startup due to the first time being inaccurate
+        yield return new object[] { DataSetSorterenHelper.LijstAflopend2.ToArray() };
+        yield return new object[] { DataSetSorterenHelper.LijstOplopend2.ToArray() };
+        yield return new object[] { DataSetSorterenHelper.LijstGesorteerdAflopend3.ToArray() };
+        yield return new object[] { DataSetSorterenHelper.LijstGesorteerdOplopend3.ToArray() };
+        yield return new object[] { DataSetSorterenHelper.LijstHerhaald1000.ToArray() };
+        yield return new object[] { DataSetSorterenHelper.LijstLeeg0.ToArray() };
+    }
+
     public static IEnumerable<object[]> DataUnsorted(){
         // Used for startup due to the first time being inaccurate
         yield return new object[] { DataSetSorterenHelper.LijstWillekeurig3 };

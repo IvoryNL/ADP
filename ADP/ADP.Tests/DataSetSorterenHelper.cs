@@ -675,9 +675,9 @@
         11312312312312.324, 1.0, -0.0, 0.0, 11312312312312.324, 1.0, -0.0, 0.0, 11312312312312.324, 1.0, -0.0, 0.0,
         11312312312312.324, 1.0, -0.0, 0.0, 11312312312312.324, 1.0, -0.0, 0.0 };
 
-        public int[] LijstGesorteerdAflopend3 = new int[] { 3, 2, 1 };
+        public static int[] LijstGesorteerdAflopend3 = new int[] { 3, 2, 1 };
 
-        public int[] LijstGesorteerdOplopend3 = new int[] { 1, 2, 3 };
+        public static int[] LijstGesorteerdOplopend3 = new int[] { 1, 2, 3 };
 
         public static int[] LijstHerhaald1000 = new int[] {
             1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
