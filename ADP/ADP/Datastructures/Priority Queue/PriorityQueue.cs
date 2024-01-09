@@ -79,11 +79,11 @@
                 var leftChildIndex = index * 2 + 1;
                 var rightChildIndex = index * 2 + 2;
 
-                if (leftChildIndex < _heap.Count - 1)
+                if (leftChildIndex < _heap.Count)
                 {
                     var minChildIndex = leftChildIndex;
                     
-                    if (rightChildIndex < _heap.Count - 1 && _comparer.Compare(_heap[rightChildIndex], _heap[leftChildIndex]) < 0)
+                    if (rightChildIndex < _heap.Count && _comparer.Compare(_heap[rightChildIndex], _heap[leftChildIndex]) < 0)
                     {
                         minChildIndex = rightChildIndex;
                     }
