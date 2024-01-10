@@ -63,7 +63,7 @@ public class DoublyLinkedListTest
         // Act
         _testOutputHelper.WriteLine($"GetValue performance");
         Console.WriteLine("###############################");
-        Console.WriteLine("DOUBLY ENDED QUEUE GETVALUE PERFORMANCE TEST");
+        Console.WriteLine("DOUBLY LINKED LIST GETVALUE PERFORMANCE TEST");
         stopwatch.Start();
         var result = doublyLinkedList.GetValue(valueToFind);
         stopwatch.Stop();
@@ -105,7 +105,7 @@ public class DoublyLinkedListTest
         // Act
         _testOutputHelper.WriteLine($"SetValue performance");
         Console.WriteLine("###############################");
-        Console.WriteLine("DOUBLY ENDED QUEUE SETVALUE PERFORMANCE TEST");
+        Console.WriteLine("DOUBLY LINKED LIST SETVALUE PERFORMANCE TEST");
         stopwatch.Start();
         doublyLinkedList.SetValue(lastIndex, valueToSet);
         stopwatch.Stop();
@@ -146,7 +146,7 @@ public class DoublyLinkedListTest
         // Act
         _testOutputHelper.WriteLine($"Remove performance");
         Console.WriteLine("###############################");
-        Console.WriteLine("DOUBLY ENDED QUEUE REMOVE PERFORMANCE TEST");
+        Console.WriteLine("DOUBLY LINKED LIST REMOVE PERFORMANCE TEST");
         stopwatch.Start();
         doublyLinkedList.Remove(valueToRemove);
         stopwatch.Stop();
@@ -187,7 +187,7 @@ public class DoublyLinkedListTest
         // Act
         _testOutputHelper.WriteLine($"RemoveAt performance");
         Console.WriteLine("###############################");
-        Console.WriteLine("DOUBLY ENDED QUEUE REMOVEAT PERFORMANCE TEST");
+        Console.WriteLine("DOUBLY LINKED LIST REMOVEAT PERFORMANCE TEST");
         stopwatch.Start();
         doublyLinkedList.RemoveAt(lastIndex);
         stopwatch.Stop();
@@ -239,7 +239,7 @@ public class DoublyLinkedListTest
         // Act
         _testOutputHelper.WriteLine($"Contains performance");
         Console.WriteLine("###############################");
-        Console.WriteLine("DOUBLY ENDED QUEUE CONTAINS PERFORMANCE TEST");
+        Console.WriteLine("DOUBLY LINKED LIST CONTAINS PERFORMANCE TEST");
         stopwatch.Start();
         var result = doublyLinkedList.Contains(valueToFind);
         stopwatch.Stop();
@@ -279,7 +279,7 @@ public class DoublyLinkedListTest
         // Act
         _testOutputHelper.WriteLine($"IndexOf performance");
         Console.WriteLine("###############################");
-        Console.WriteLine("DOUBLY ENDED QUEUE INDEXOF PERFORMANCE TEST");
+        Console.WriteLine("DOUBLY LINKED LIST INDEXOF PERFORMANCE TEST");
         stopwatch.Start();
         var result = doublyLinkedList.IndexOf(valueToFind);
         stopwatch.Stop();
