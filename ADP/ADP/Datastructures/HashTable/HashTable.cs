@@ -55,13 +55,10 @@ public class HashTable<TKey, TValue> where TValue : IEquatable<TValue>
         ValidateKey(key);
 
         var index = GenerateHashCode(key);
-        var values = _buckets[index].Where(b => b.Key.Equals(key));
-        
-        foreach (var item in values)
-        {
-            _buckets[index].Remove(item);
-            _count--;
-        }
+        var item = _buckets[index].FirstOrDefault(b => b.Key != null && b.Key.Equals(key));
+
+        _buckets[index].Remove(item);
+        _count--;
 
         if (GetLoadFactorValue() < LoadFactorMin)
         {
