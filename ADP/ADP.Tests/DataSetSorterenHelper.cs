@@ -2,6 +2,12 @@
 {
     public class DataSetSorterenHelper
     {
+        public static int[] LijstHashingTest1 = new int[] { 1, 4, 3, 2 };
+        
+        public static int[] LijstHashingTest2 = new int[] { 1, 4, 3, 2, 6, 5, 7, 8, 9, 10, 11 };
+        
+        public static string[][] LijstHashingTest3 = new string[][] { new string[] {"Jan", "Jansen"}, new string[] { "Piet", "Pietersen"}, new string[] { "Klaas", "Klaasen"}, new string[] { "Jan", "Jannes"} };
+        
         public static int[] LijstAflopend2 = new int[] { 1, -10033224 };
 
         public static int[] LijstOplopend2 = new int[] { -100324, 1023 };

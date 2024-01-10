@@ -28,8 +28,9 @@ public class HashTable<TKey, TValue> where TValue : IEquatable<TValue>
 
         _buckets[index].AddFirst(newKeyValue);
         _count++;
-        
-        if (GetLoadFactorValue() > LoadFactorMax)
+
+        var loadFactor = GetLoadFactorValue();
+        if (loadFactor > LoadFactorMax)
         {
             IncreaseArraySize();
         }
@@ -75,7 +76,7 @@ public class HashTable<TKey, TValue> where TValue : IEquatable<TValue>
         
         var index = GenerateHashCode(key);
         
-        var currentKeyValue = _buckets[index].FirstOrDefault(b => b.Key.Equals(key));
+        var currentKeyValue = _buckets[index].FirstOrDefault(b => b.Key != null && b.Key.Equals(key));
         if (currentKeyValue != null)
         {
             currentKeyValue.Value = value;
@@ -120,12 +121,14 @@ public class HashTable<TKey, TValue> where TValue : IEquatable<TValue>
         
         if (typeof(TKey) == typeof(int))
         {
-            return key.GetHashCode() % _buckets.Length;
+            var hash = key.GetHashCode();
+            return hash % _buckets.Length;
         }
 
         if (typeof(TKey) == typeof(string))
         {
-            return GetCustomHashCode(key!.ToString()) % _buckets.Length;
+            var hash = GetCustomHashCode(key.ToString());
+            return hash % _buckets.Length;
         }
         
         return key.GetHashCode() % _buckets.Length;
@@ -140,7 +143,7 @@ public class HashTable<TKey, TValue> where TValue : IEquatable<TValue>
             hash *= 31 + item;
         }
         
-        return hash;
+        return hash >= 0 ? hash : -hash; ;
     }
     
     private void IncreaseArraySize()
