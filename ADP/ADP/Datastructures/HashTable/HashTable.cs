@@ -2,13 +2,11 @@
 
 namespace ADP.Datastructures.HashTable;
 
-public class HashTable<TKey, TValue>
+public class HashTable<TKey, TValue> where TValue : IEquatable<TValue>
 {
-    
-    private const int GROWTH_FACTOR = 2;
-    private const int SHRINK_FACTOR = 4;
-    private const double LOAD_FACTOR_MAX = 0.5;
-    private const double LOAD_FACTOR_MIN = LOAD_FACTOR_MAX / 2;
+    private const int GrowthFactor = 2;
+    private const double LoadFactorMax = 0.5;
+    private const double LoadFactorMin = LoadFactorMax / 2;
 
     private LinkedList<KeyValue<TKey, TValue>>[] _buckets;
     private int _count;
@@ -22,20 +20,25 @@ public class HashTable<TKey, TValue>
 
     public void Insert(TKey key, TValue value)
     {
+        ValidateKey(key);
+        ValidateValue(value);
+        
         var index = GenerateHashCode(key);
         var newKeyValue = new KeyValue<TKey, TValue>(key, value);
 
         _buckets[index].AddFirst(newKeyValue);
         _count++;
         
-        if (GetLoadFactorValue() > LOAD_FACTOR_MAX)
+        if (GetLoadFactorValue() > LoadFactorMax)
         {
-            DecreaseArraySize();
+            IncreaseArraySize();
         }
     }
-
+    
     public TValue Get(TKey key)
     {
+        ValidateKey(key);
+        
         var index = GenerateHashCode(key);
 
         foreach (var item in _buckets[index].Where(item => item.Key != null && item.Key.Equals(key)))
@@ -48,6 +51,8 @@ public class HashTable<TKey, TValue>
 
     public void Delete(TKey key)
     {
+        ValidateKey(key);
+
         var index = GenerateHashCode(key);
         var values = _buckets[index].Where(b => b.Key.Equals(key));
         
@@ -57,7 +62,7 @@ public class HashTable<TKey, TValue>
             _count--;
         }
 
-        if (GetLoadFactorValue() < LOAD_FACTOR_MIN)
+        if (GetLoadFactorValue() < LoadFactorMin)
         {
             DecreaseArraySize();
         }
@@ -65,10 +70,16 @@ public class HashTable<TKey, TValue>
 
     public void Update(TKey key, TValue value)
     {
+        ValidateKey(key);
+        ValidateValue(value);
+        
         var index = GenerateHashCode(key);
         
         var currentKeyValue = _buckets[index].FirstOrDefault(b => b.Key.Equals(key));
-        currentKeyValue.Value = value;
+        if (currentKeyValue != null)
+        {
+            currentKeyValue.Value = value;
+        }
     }
 
     private double GetLoadFactorValue()
@@ -83,6 +94,22 @@ public class HashTable<TKey, TValue>
             buckets[i] = new LinkedList<KeyValue<TKey, TValue>>();
         }
     }
+    
+    private void ValidateKey(TKey key)
+    {
+        if (key == null)
+        {
+            throw new ArgumentNullException(nameof(key));
+        }
+    }
+    
+    private void ValidateValue(TValue value)
+    {
+        if (value == null)
+        {
+            throw new ArgumentNullException(nameof(value));
+        }
+    }
 
     private int GenerateHashCode(TKey key)
     {
@@ -93,15 +120,15 @@ public class HashTable<TKey, TValue>
         
         if (typeof(TKey) == typeof(int))
         {
-            return key.GetHashCode();
+            return key.GetHashCode() % _buckets.Length;
         }
 
         if (typeof(TKey) == typeof(string))
         {
-            return GetCustomHashCode(key.ToString());
+            return GetCustomHashCode(key!.ToString()) % _buckets.Length;
         }
         
-        return key.GetHashCode();
+        return key.GetHashCode() % _buckets.Length;
     }
 
     private int GetCustomHashCode(string key)
@@ -118,21 +145,21 @@ public class HashTable<TKey, TValue>
     
     private void IncreaseArraySize()
     {
-        _capacity *= GROWTH_FACTOR;
+        _capacity *= GrowthFactor;
 
         Resize();
     }
 
     private void DecreaseArraySize()
     {
-        _capacity = _capacity / GROWTH_FACTOR;
+        _capacity = _capacity / GrowthFactor;
 
         Resize();
     }
     
     private void Resize()
     {
-        var newCapacity = _capacity * GROWTH_FACTOR;
+        var newCapacity = _capacity * GrowthFactor;
         var resizedArray = new LinkedList<KeyValue<TKey, TValue>>[newCapacity];
         
         InstantiateBuckets(resizedArray);
