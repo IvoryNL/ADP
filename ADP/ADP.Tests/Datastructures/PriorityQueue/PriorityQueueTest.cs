@@ -30,8 +30,8 @@ public class PriorityQueueTest
         _priorityQueue.Peek().ShouldBeEquivalentTo(numberToEnqueue);
     }
     
-    // This test show that the time complexity is O(N) linear
-    // It enqueues one at a time.
+    // This test show that the time complexity is O(log N) logarithmic
+    // It enqueues one at a time. The bubble up skips the children and focuses on the parent.
     // Ignore the first console output due to startup time
     [Theory]
     [MemberData(nameof(Data))]
@@ -71,8 +71,8 @@ public class PriorityQueueTest
         result.ShouldBeEquivalentTo(expectedNumberToDequeue);
     }
     
-    // This test show that the time complexity is O(N) linear
-    // It dequeues one at a time.
+    // This test show that the time complexity is O(log N) logarithmic.
+    // It dequeues one at a time. The bubble down skips the children and focuses on the parent.
     // Ignore the first console output due to startup time
     [Theory]
     [MemberData(nameof(Data))]
