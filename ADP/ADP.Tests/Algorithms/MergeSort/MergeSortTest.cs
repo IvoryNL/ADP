@@ -14,7 +14,7 @@ public class MergeSortTest
         _testOutputHelper = testOutputHelper;
     }
     
-    // This test show that the time complexity is O(log N) logarithmic
+    // This test show that the time complexity is O(N log N) linearithmic
     // Even when the data grows X times the runtime does not due to divide and conquer
     // Ignore the first console output due to startup time
     [Theory]
