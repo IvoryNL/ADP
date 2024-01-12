@@ -2,7 +2,7 @@
 {
     public static class MergeSortAlgorithm
     {
-        public static void MergeSort(int[] inputArray)
+        public static void ParallelMergeSort(int[] inputArray)
         {
             var length = inputArray.Length;
 
@@ -24,12 +24,12 @@
                     rightArray[j++] = inputArray[i];
                 }
             }
-
-            MergeSort(leftArray);
-            MergeSort(rightArray);
+            
+            Parallel.Invoke(() => ParallelMergeSort(leftArray), () => ParallelMergeSort(rightArray));
+            
             Merge(inputArray, leftArray, rightArray);
         }
-
+        
         private static void Merge(int[] inputArray, int[] leftArray, int[] rightArray)
         {
             var leftSize = leftArray.Length;

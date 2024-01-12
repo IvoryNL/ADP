@@ -27,4 +27,8 @@
     <ProjectReference Include="..\ADP\ADP.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Datastructures\AvlTree\" />
+  </ItemGroup>
+
 </Project>
