@@ -37,13 +37,13 @@ public class Node<T> : IComparable<T> where T : IComparable
     {
         switch (_nodeState)
         {
-            case TreeState.LeftHeavy when LeftChild?.BalanceFactor > 0:
+            case TreeState.LeftHeavy when LeftChild is not null && LeftChild.BalanceFactor > 0:
                 RotateRightLeft();
                 break;
             case TreeState.LeftHeavy:
                 RotateRight();
                 break;
-            case TreeState.RightHeavy when RightChild?.BalanceFactor < 0:
+            case TreeState.RightHeavy when RightChild is not null && RightChild.BalanceFactor < 0:
                 RotateLeftRight();
                 break;
             case TreeState.RightHeavy:
@@ -96,21 +96,21 @@ public class Node<T> : IComparable<T> where T : IComparable
             }
             else if (Parent.RightChild == this)
             {
-                Parent.RightChild = this;
+                Parent.RightChild = newRootNode;
             }
         }
     }
 
     private void RotateLeftRight()
     {
+        RightChild.RotateRight();
         RotateLeft();
-        RotateRight();
     }
 
     private void RotateRightLeft()
     {
+        LeftChild.RotateLeft();
         RotateRight();
-        RotateLeft();
     }
 
     private int MaxChildHeight(Node<T>? childNode)
