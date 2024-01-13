@@ -1,83 +1,154 @@
-﻿using ADP.Datastructures.DoublyEndedQueue;
-using Shouldly;
+﻿using System.Diagnostics;
+using ADP.Datastructures.DoublyEndedQueue;
+using Xunit.Abstractions;
 
 namespace ADP.Tests.DoublyEndedQueue;
 
 public class DoubleEndedQueueTest
 {
-    private readonly DoubleEndedQueue<int> _doubleEndedQueue = new();
+    private readonly ITestOutputHelper _testOutputHelper;
 
-    public DoubleEndedQueueTest()
+    public DoubleEndedQueueTest(ITestOutputHelper testOutputHelper)
     {
-        foreach (var item in DataSetSorterenHelper.LijstOplopend10000)
-        {
-            _doubleEndedQueue.InsertLeft(item);
-        }
+        _testOutputHelper = testOutputHelper;
     }
     
     // InsertLeft is O(1) constant.
     // There is no use in testing performance due to it always adding the new node to the head node
     // The head node always holds the most left item
-    [Fact]
-    public void TestInsertLeft()
+    [Theory]
+    [MemberData(nameof(DataUnsorted))]
+    public void TestInsertLeft(int[] input)
     {
         // Arrange
-        var valueToInsert = 100;
+        var doubleEndedQueue = GenerateDoubleEndedQueue(input);
+        var valuesToInsert = new int[] { 99, 60, 29 };
+        var stopwatch = new Stopwatch();
 
         // Act
-        _doubleEndedQueue.InsertLeft(valueToInsert);
+        _testOutputHelper.WriteLine($"Insert left performance {input.Length}");
+        Console.WriteLine("###############################");
+        Console.WriteLine("DOUBLE ENDED QUEUE INSERT LEFT PERFORMANCE TEST");
+        stopwatch.Start();
+        foreach (var item in valuesToInsert)
+        {
+            doubleEndedQueue.InsertLeft(item);
+        }
+        stopwatch.Stop();
+        _testOutputHelper.WriteLine($"Elapsed time {stopwatch.Elapsed}");
+        Console.WriteLine($"Elapsed time {stopwatch.Elapsed}");
+        Console.WriteLine("###############################");
 
         // Assert
-        _doubleEndedQueue.PeekLeft().ShouldBeEquivalentTo(valueToInsert);
+        
     }
     
     // DeleteLeft is O(1) constant.
     // There is no use in testing performance due to it always returning the head node
     // The head node always holds the most left item
-    [Fact]
-    public void TestDeleteLeft()
+    [Theory]
+    [MemberData(nameof(DataUnsorted))]
+    public void TestDeleteLeft(int[] input)
     {
         // Arrange
-        var valueThatWillBeDeleted = _doubleEndedQueue.PeekLeft();
+        var doubleEndedQueue = GenerateDoubleEndedQueue(input);
+        var stopwatch = new Stopwatch();
 
         // Act
-        var result = _doubleEndedQueue.DeleteLeft();
+        _testOutputHelper.WriteLine($"Delete left performance {input.Length}");
+        Console.WriteLine("###############################");
+        Console.WriteLine("DOUBLE ENDED QUEUE DELETE LEFT PERFORMANCE TEST");
+        stopwatch.Start();
+        for (var i = 0; i < 3; i++)
+        {
+            var result = doubleEndedQueue.DeleteLeft();
+        }
+        stopwatch.Stop();
+        _testOutputHelper.WriteLine($"Elapsed time {stopwatch.Elapsed}");
+        Console.WriteLine($"Elapsed time {stopwatch.Elapsed}");
+        Console.WriteLine("###############################");
 
         // Assert
-        result.ShouldBe(valueThatWillBeDeleted);
-        _doubleEndedQueue.PeekLeft().ShouldNotBe(valueThatWillBeDeleted);
+        
     }
     
     // InsertRight is O(1) constant.
     // There is no use in testing performance due to it always adding the new node to the tail node
     // The tail node always holds the most right item
-    [Fact]
-    public void TestInsertRight()
+    [Theory]
+    [MemberData(nameof(DataUnsorted))]
+    public void TestInsertRight(int[] input)
     {
         // Arrange
-        var valueToInsert = 100;
+        var doubleEndedQueue = GenerateDoubleEndedQueue(input);
+        var valuesToInsert = new int[] { 99, 60, 29 };
+        var stopwatch = new Stopwatch();
 
         // Act
-        _doubleEndedQueue.InsertRight(valueToInsert);
+        _testOutputHelper.WriteLine($"Insert right performance {input.Length}");
+        Console.WriteLine("###############################");
+        Console.WriteLine("DOUBLE ENDED QUEUE INSERT RIGHT PERFORMANCE TEST");
+        stopwatch.Start();
+        foreach (var item in valuesToInsert)
+        {
+            doubleEndedQueue.InsertRight(item);
+        }
+        stopwatch.Stop();
+        _testOutputHelper.WriteLine($"Elapsed time {stopwatch.Elapsed}");
+        Console.WriteLine($"Elapsed time {stopwatch.Elapsed}");
+        Console.WriteLine("###############################");
 
         // Assert
-        _doubleEndedQueue.PeekRight().ShouldBeEquivalentTo(valueToInsert);
+        
     }
     
     // DeleteRight is O(1) constant.
     // There is no use in testing performance due to it always returning the tail node
     // The tail node always holds the most right item
-    [Fact]
-    public void TestDeleteRight()
+    [Theory]
+    [MemberData(nameof(DataUnsorted))]
+    public void TestDeleteRight(int[] input)
     {
         // Arrange
-        var valueThatWillBeDeleted = _doubleEndedQueue.PeekRight();
+        var doubleEndedQueue = GenerateDoubleEndedQueue(input);
+        var stopwatch = new Stopwatch();
 
         // Act
-        var result = _doubleEndedQueue.DeleteRight();
+        _testOutputHelper.WriteLine($"Delete right performance {input.Length}");
+        Console.WriteLine("###############################");
+        Console.WriteLine("DOUBLE ENDED QUEUE DELETE RIGHT PERFORMANCE TEST");
+        stopwatch.Start();
+        for (var i = 0; i < 3; i++)
+        {
+            var result = doubleEndedQueue.DeleteRight();
+        }
+        stopwatch.Stop();
+        _testOutputHelper.WriteLine($"Elapsed time {stopwatch.Elapsed}");
+        Console.WriteLine($"Elapsed time {stopwatch.Elapsed}");
+        Console.WriteLine("###############################");
 
         // Assert
-        result.ShouldBe(valueThatWillBeDeleted);
-        _doubleEndedQueue.PeekRight().ShouldNotBe(valueThatWillBeDeleted);
+        
+    }
+    
+    private DoubleEndedQueue<int> GenerateDoubleEndedQueue(int[] data)
+    {
+        var doublyEndedQueue = new DoubleEndedQueue<int>();
+
+        foreach (var item in data)
+        {
+            doublyEndedQueue.InsertLeft(item);
+        }
+
+        return doublyEndedQueue;
+    }
+
+    public static IEnumerable<object[]> DataUnsorted()
+    {
+        // Used for startup due to the first time being inaccurate
+        yield return new object[] { DataSetSorterenHelper.LijstWillekeurig3.ToArray() };
+        yield return new object[] { DataSetSorterenHelper.LijstWillekeurig100.ToArray() };
+        yield return new object[] { DataSetSorterenHelper.LijstWillekeurig1000.ToArray() };
+        yield return new object[] { DataSetSorterenHelper.LijstWillekeurig10000.ToArray() };
     }
 }

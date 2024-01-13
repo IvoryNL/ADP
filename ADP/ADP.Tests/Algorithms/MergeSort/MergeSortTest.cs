@@ -29,7 +29,7 @@ public class MergeSortTest
         Console.WriteLine("###############################");
         Console.WriteLine($"MERGE SORT UNSORTED PERFORMANCE TEST {input.Length}");
         stopwatch.Start();
-        MergeSortAlgorithm.MergeSort(input);
+        MergeSortAlgorithm.ParallelMergeSort(input);
         stopwatch.Stop();
         
         _testOutputHelper.WriteLine($"Elapsed time {stopwatch.Elapsed}");
@@ -48,7 +48,7 @@ public class MergeSortTest
         expectedSortedInput.Sort();
         
         // Act
-        MergeSortAlgorithm.MergeSort(input);
+        MergeSortAlgorithm.ParallelMergeSort(input);
         
         // Assert
         input.ShouldBeEquivalentTo(expectedSortedInput.ToArray());
