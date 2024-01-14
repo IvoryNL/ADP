@@ -173,8 +173,8 @@ public class AvlTreeTest
     {
         // Used for startup due to the first time being inaccurate
         yield return new object[] { DataSetSorterenHelper.LijstWillekeurig5.ToArray() };
-        // yield return new object[] { DataSetSorterenHelper.LijstWillekeurig100.ToArray() };
-        // yield return new object[] { DataSetSorterenHelper.LijstWillekeurig1000.ToArray() };
-        // yield return new object[] { DataSetSorterenHelper.LijstWillekeurig10000.ToArray() };
+        yield return new object[] { DataSetSorterenHelper.LijstWillekeurig100.ToArray() };
+        yield return new object[] { DataSetSorterenHelper.LijstWillekeurig1000.ToArray() };
+        yield return new object[] { DataSetSorterenHelper.LijstWillekeurig10000.ToArray() };
     }
 }

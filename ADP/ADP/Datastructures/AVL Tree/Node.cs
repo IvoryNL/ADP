@@ -99,6 +99,9 @@ public class Node<T> : IComparable<T> where T : IComparable
                 Parent.RightChild = newRootNode;
             }
         }
+        
+        newRootNode.Parent = Parent;
+        Parent = newRootNode;
     }
 
     private void RotateLeftRight()
