@@ -5,6 +5,8 @@
         private List<T> _heap;
         private IComparer<T> _comparer;
 
+        public int Count => _heap.Count;
+
         public PriorityQueue() : this(Comparer<T>.Default)
         {
         }

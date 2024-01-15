@@ -1,6 +1,135 @@
-﻿namespace ADP.Tests;
+﻿using ADP.Datastructures.Graph;
+
+namespace ADP.Tests;
 public static class DataSetGraphHelper
 {
+    public static GraphADP<string> Dijkstra1
+    {
+        get
+        {
+            var graph = new GraphADP<string>();
+            graph.AddVertex("S");
+            graph.AddVertex("B");
+            graph.AddVertex("E");
+
+            graph.AddEdge("S", "E", 7);
+            graph.AddEdge("S", "B", 2);
+
+            graph.AddEdge("E", "S", 7);
+            graph.AddEdge("E", "B", 3);
+
+            graph.AddEdge("B", "S", 2);
+            graph.AddEdge("B", "E", 3);
+
+            return graph;
+        }
+    }
+
+    public static GraphADP<string> Dijkstra2
+    {
+        get
+        {
+            var graph = new GraphADP<string>();
+            graph.AddVertex("S");
+            graph.AddVertex("A");
+            graph.AddVertex("B");
+            graph.AddVertex("D");
+            graph.AddVertex("E");
+
+            graph.AddEdge("S", "A", 7);
+            graph.AddEdge("S", "B", 2);
+
+            graph.AddEdge("A", "S", 7);
+            graph.AddEdge("A", "D", 4);
+            graph.AddEdge("A", "B", 3);
+
+            graph.AddEdge("D", "A", 4);
+            graph.AddEdge("D", "B", 4);
+            graph.AddEdge("D", "E", 2);
+
+            graph.AddEdge("B", "E", 12);
+            graph.AddEdge("B", "S", 2);
+            graph.AddEdge("B", "A", 3);
+
+            graph.AddEdge("E", "D", 2);
+            graph.AddEdge("E", "B", 12);
+
+            return graph;
+        }
+    }
+
+    public static GraphADP<string> Dijkstra3
+    {
+        get
+        {
+            var graph = new GraphADP<string>();
+            graph.AddVertex("S");
+            graph.AddVertex("A");
+            graph.AddVertex("B");
+            graph.AddVertex("C");
+            graph.AddVertex("D");
+            graph.AddVertex("F");
+            graph.AddVertex("G");
+            graph.AddVertex("H");
+            graph.AddVertex("I");
+            graph.AddVertex("J");
+            graph.AddVertex("K");
+            graph.AddVertex("L");
+            graph.AddVertex("E");
+
+            graph.AddEdge("S", "A", 7);
+            graph.AddEdge("S", "B", 2);
+            graph.AddEdge("S", "C", 3);
+
+            graph.AddEdge("A", "S", 7);
+            graph.AddEdge("A", "D", 4);
+            graph.AddEdge("A", "B", 3);
+
+            graph.AddEdge("D", "A", 4);
+            graph.AddEdge("D", "B", 4);
+            graph.AddEdge("D", "F", 5);
+
+            graph.AddEdge("B", "D", 4);
+            graph.AddEdge("B", "S", 2);
+            graph.AddEdge("B", "H", 1);
+            graph.AddEdge("B", "A", 3);
+
+            graph.AddEdge("F", "D", 5);
+            graph.AddEdge("F", "H", 3);
+
+            graph.AddEdge("H", "B", 1);
+            graph.AddEdge("H", "F", 3);
+            graph.AddEdge("H", "G", 2);
+
+            graph.AddEdge("G", "H", 2);
+            graph.AddEdge("G", "E", 2);
+
+            graph.AddEdge("E", "G", 2);
+            graph.AddEdge("E", "K", 5);
+
+            graph.AddEdge("C", "S", 3);
+            graph.AddEdge("C", "L", 2);
+
+            graph.AddEdge("L", "I", 4);
+            graph.AddEdge("L", "J", 4);
+            graph.AddEdge("L", "C", 2);
+
+            graph.AddEdge("I", "L", 4);
+            graph.AddEdge("I", "J", 6);
+            graph.AddEdge("I", "K", 4);
+
+            graph.AddEdge("J", "L", 4);
+            graph.AddEdge("J", "I", 6);
+            graph.AddEdge("J", "K", 4);
+
+            graph.AddEdge("K", "I", 4);
+            graph.AddEdge("K", "J", 4);
+            graph.AddEdge("K", "E", 5);
+
+            return graph;
+        }
+    }
+
     public static int[][] lijstOngewogen1 = new int[][]
     {
         new int[] {1, 2},
