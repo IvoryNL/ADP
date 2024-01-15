@@ -14,6 +14,7 @@ public class GraphTest
         _testOutputHelper = testOutputHelper;
     }
 
+    // The time complexity is O(1)
     [Theory]
     [MemberData(nameof(DataUnweighted))]
     public void TestInsertVertexUnweightedPerformance(int[][] input)
@@ -38,6 +39,7 @@ public class GraphTest
 
     }
 
+    // The time conplexity O(V + E)
     [Theory]
     [MemberData(nameof(DataUnweighted))]
     public void TestRemoveVertexUnweightedPerformance(int[][] input)
@@ -66,6 +68,7 @@ public class GraphTest
 
     }
 
+    // The time complexity is O(1)
     [Theory]
     [MemberData(nameof(DataUnweighted))]
     public void TestInsertEdgeUnweightedPerformance(int[][] input)
@@ -92,6 +95,7 @@ public class GraphTest
 
     }
 
+    // The time conplexity O(V + E)
     [Theory]
     [MemberData(nameof(DataUnweighted))]
     public void TestRemoveEdgeUnweightedPerformance(int[][] input)
@@ -124,6 +128,7 @@ public class GraphTest
 
     }
 
+    // The time complexity is O(1)
     [Theory]
     [MemberData(nameof(DataWeighted))]
     public void TestInsertVertexWeightedPerformance(int[][][] input)
@@ -149,6 +154,7 @@ public class GraphTest
 
     }
 
+    // The time conplexity O(V + E)
     [Theory]
     [MemberData(nameof(DataWeighted))]
     public void TestRemoveVertexWeightedPerformance(int[][][] input)
@@ -177,6 +183,7 @@ public class GraphTest
 
     }
 
+    // The time complexity is O(1)
     [Theory]
     [MemberData(nameof(DataWeighted))]
     public void TestInsertEdgeWeightedPerformance(int[][][] input)
@@ -202,7 +209,7 @@ public class GraphTest
         // Assert
 
     }
-
+    // The time conplexity O(V + E)
     [Theory]
     [MemberData(nameof(DataWeighted))]
     public void TestRemoveEdgeWeightedPerformance(int[][][] input)
