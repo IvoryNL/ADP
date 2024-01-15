@@ -19,7 +19,8 @@ public class GraphTest
     public void TestInsertVertexUnweightedPerformance(int[][] input)
     {
         // Arrange
-        var graph = new GraphADP<int>();
+        var graph = GenerateGraphUnweighted(input);
+        var valueToInsert = input.Length;
         var stopwatch = new Stopwatch();
 
         // Act
@@ -27,11 +28,7 @@ public class GraphTest
         Console.WriteLine("###############################");
         Console.WriteLine("GRAPH INSERT VERTEX UNWEIGHTED PERFORMANCE TEST");
         stopwatch.Start();
-        for (var i = 0; i < input.Length; i++)
-        {
-            var vertexData = i;
-            graph.AddVertex(vertexData);
-        }
+        graph.AddVertex(valueToInsert);
         stopwatch.Stop();
         _testOutputHelper.WriteLine($"Elapsed time {stopwatch.Elapsed}");
         Console.WriteLine($"Elapsed time {stopwatch.Elapsed}");
@@ -74,29 +71,18 @@ public class GraphTest
     public void TestInsertEdgeUnweightedPerformance(int[][] input)
     {
         // Arrange
-        var graph = new GraphADP<int>();
+        var graph = GenerateGraphUnweighted(input);
+        var valueToInsert = input.Length;
+        graph.AddVertex(valueToInsert);
+        var edgeToInsert = 3;
         var stopwatch = new Stopwatch();
-
-        for (var i = 0; i < input.Length; i++)
-        {
-            var vertexData = i;
-            graph.AddVertex(vertexData);
-        }
 
         // Act
         _testOutputHelper.WriteLine($"Insert edge unweighted performance {input.Length}");
         Console.WriteLine("###############################");
         Console.WriteLine("GRAPH INSERT EDGE UNWEIGHTED PERFORMANCE TEST");
         stopwatch.Start();
-        for (var i = 0; i < input.Length; i++)
-        {
-            for (var j = 0; j < input[i].Length; j++)
-            {
-                var vertexData = i;
-                var edgeData = input[i][j];
-                graph.AddEdge(vertexData, edgeData);
-            }
-        }
+        graph.AddEdge(valueToInsert, edgeToInsert);
         stopwatch.Stop();
         _testOutputHelper.WriteLine($"Elapsed time {stopwatch.Elapsed}");
         Console.WriteLine($"Elapsed time {stopwatch.Elapsed}");
@@ -143,19 +129,17 @@ public class GraphTest
     public void TestInsertVertexWeightedPerformance(int[][][] input)
     {
         // Arrange
-        var graph = new GraphADP<int>();
+        var graph = GenerateGraphWeighted(input);
+        var valueToInsert = input.Length;
         var stopwatch = new Stopwatch();
+
 
         // Act
         _testOutputHelper.WriteLine($"Insert vertex weighted performance {input.Length}");
         Console.WriteLine("###############################");
         Console.WriteLine("GRAPH INSERT VERTEX WEIGHTED PERFORMANCE TEST");
         stopwatch.Start();
-        for (var i = 0; i < input.Length; i++)
-        {
-            var vertexData = i;
-            graph.AddVertex(vertexData);
-        }
+        graph.AddVertex(valueToInsert);
         stopwatch.Stop();
         _testOutputHelper.WriteLine($"Elapsed time {stopwatch.Elapsed}");
         Console.WriteLine($"Elapsed time {stopwatch.Elapsed}");
@@ -198,29 +182,18 @@ public class GraphTest
     public void TestInsertEdgeWeightedPerformance(int[][][] input)
     {
         // Arrange
-        var graph = new GraphADP<int>();
+        var graph = GenerateGraphWeighted(input);
+        var valueToInsert = input.Length;
+        graph.AddVertex(valueToInsert);
+        var edgeToInsert = new int[] { 3, 50 };
         var stopwatch = new Stopwatch();
-
-        for (var i = 0; i < input.Length; i++)
-        {
-            var vertexData = i;
-            graph.AddVertex(vertexData);
-        }
 
         // Act
         _testOutputHelper.WriteLine($"Insert edge weighted performance {input.Length}");
         Console.WriteLine("###############################");
         Console.WriteLine("GRAPH INSERT EDGE WEIGHTED PERFORMANCE TEST");
         stopwatch.Start();
-        for (var i = 0; i < input.Length; i++)
-        {
-            for (var j = 0; j < input[i].Length; j++)
-            {
-                var vertexData = i;
-                var edgeData = input[i][j];
-                graph.AddEdge(vertexData, edgeData[0], edgeData[1]);
-            }
-        }
+        graph.AddEdge(valueToInsert, edgeToInsert[0], edgeToInsert[1]);
         stopwatch.Stop();
         _testOutputHelper.WriteLine($"Elapsed time {stopwatch.Elapsed}");
         Console.WriteLine($"Elapsed time {stopwatch.Elapsed}");
