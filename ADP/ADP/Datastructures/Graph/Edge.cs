@@ -1,4 +1,4 @@
-﻿namespace ADP.Algorithms.Graph;
+﻿namespace ADP.Datastructures.Graph;
 
 public class Edge<T>
 {

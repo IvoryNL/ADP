@@ -1,7 +1,7 @@
 ﻿using Xunit.Abstractions;
-using ADP.Algorithms.Graph;
 using System.Diagnostics;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using ADP.Datastructures.Graph;
 
 namespace ADP.Tests.Datastructures.Graph;
 
