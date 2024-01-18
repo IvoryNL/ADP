@@ -8,6 +8,6 @@ public class Edge<T>
     public Edge(Vertex<T> destinationVertex, int weight)
     {
         DestinationVertext = destinationVertex;
-        Weight = weight;
+        Weight = weight >= 0 ? weight : throw new ArgumentException("Weight cannot be negative");
     }
 }
