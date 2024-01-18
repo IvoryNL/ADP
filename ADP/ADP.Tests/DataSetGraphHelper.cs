@@ -130,7 +130,50 @@ public static class DataSetGraphHelper
         }
     }
 
-    public static int[][] lijstOngewogen1 = new int[][]
+    public static int[][] lijnlijst = new int[][]
+    {
+        new int[] { 0, 1 },
+        new int[] { 0, 2 },
+        new int[] { 1, 2 },
+        new int[] { 1, 3 },
+        new int[] { 2, 4 },
+        new int[] { 3, 4 },
+        new int[] { 4, 5 },
+        new int[] { 5, 6 }
+    };
+
+    public static int[][] lijnlijst_gewogen = new int[][]
+    {
+        new int[] { 0, 1, 99  },
+        new int[] { 0, 2, 50  },
+        new int[] { 1, 2, 50  },
+        new int[] { 1, 3, 50  },
+        new int[] { 1, 4, 50  },
+        new int[] { 2, 3, 99  },
+        new int[] { 3, 4, 75  }
+    };
+
+    public static int[][] verbindingsmatrix = new int[][]
+    {
+        new int [] { 0, 1, 1, 0, 0, 0, 0 },
+        new int [] { 1, 0, 1, 1, 0, 0, 0 },
+        new int [] { 1, 1, 0, 0, 1, 0, 0 },
+        new int [] { 0, 1, 0, 0, 1, 0, 0 },
+        new int [] { 0, 0, 1, 1, 0, 1, 0 },
+        new int [] { 0, 0, 0, 0, 1, 0, 1 },
+        new int [] { 0, 0, 0, 0, 0, 1, 0 }
+    };
+
+    public static int[][] verbindingsmatrix_gewogen = new int[][]
+    {
+        new int [] { 0, 99, 50, 0, 0},
+        new int [] { 0, 0, 50, 50, 50 },
+        new int [] { 0, 0, 0, 99, 0 },
+        new int [] { 0, 0, 0, 0, 75 },
+        new int [] { 0, 0, 0, 0, 0 }
+    };
+
+    public static int[][] verbindingslijst1 = new int[][]
     {
         new int[] {1, 2},
         new int[] {0, 2, 3},
@@ -141,7 +184,7 @@ public static class DataSetGraphHelper
         new int[] {5}
     };
 
-    public static int[][] lijstOngewogen2 = new int[][]
+    public static int[][] verbindingslijst2 = new int[][]
     {
         new int[] {1, 2},
         new int[] {0, 2, 3},
@@ -159,7 +202,7 @@ public static class DataSetGraphHelper
         new int[] {11}
     };
 
-    public static int[][] lijstOngewogen3 = new int[][]
+    public static int[][] verbindingslijst3 = new int[][]
     {
         new int[] {1, 2},
         new int[] {0, 2, 3},
@@ -192,7 +235,7 @@ public static class DataSetGraphHelper
         new int[] { 22 }
     };
 
-    public static int[][][] LijstGewogen1 = new int[][][]
+    public static int[][][] verbindingslijst_gewogen1 = new int[][][]
     {
         new int[][]
         {
@@ -214,7 +257,7 @@ public static class DataSetGraphHelper
         },
     };
 
-    public static int[][][] LijstGewogen2 = new int[][][]
+    public static int[][][] verbindingslijst_gewogen2 = new int[][][]
     {
         new int[][]
         {
@@ -256,7 +299,7 @@ public static class DataSetGraphHelper
         }
     };
 
-    public static int[][][] LijstGewogen3 = new int[][][]
+    public static int[][][] verbindingslijst_gewogen3 = new int[][][]
     {
         new int[][]
         {
@@ -317,5 +360,3 @@ public static class DataSetGraphHelper
         },
     };
 }
-
-

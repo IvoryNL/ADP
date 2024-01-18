@@ -1,5 +1,6 @@
 ﻿using ADP.Algorithms;
 using ADP.Datastructures.Graph;
+using ADP.Datastructures.Graph.Helpers;
 using System.Diagnostics;
 using Xunit.Abstractions;
 
@@ -18,11 +19,13 @@ namespace ADP.Tests.Algorithms.DijkstraShortestPath
         // V for the Vertices and E for the edges of the Vertices
         // The O(log V) are the operations of the priority queue due to it using an heap
         [Theory]
-        [MemberData(nameof(DataWeighted))]
-        public void TestDijkstraShortestPathPerformance(int[][][] input, int startValue, int endValue)
+        [MemberData(nameof(DataAdjacencyListWeighted))]
+        public void TestDijkstraShortestPathAdjacencyListPerformance(int[][][] input, int startValue, int endValue)
         {
             // Arrange
-            var graph = GenerateGraphWeighted(input);
+            var graph = new GraphADP<int>();
+            graph.ReadAdjacencyListWeightedInt(input);
+
             var stopwatch = new Stopwatch();
 
             // Act
@@ -94,6 +97,46 @@ namespace ADP.Tests.Algorithms.DijkstraShortestPath
             return graph;
         }
 
+        // The time complexity of the algorithm is O(V + E) * O(log V)
+        // V for the Vertices and E for the edges of the Vertices
+        // The O(log V) are the operations of the priority queue due to it using an heap
+        [Fact]
+        public void TestDijkstraShortestPathAdjacencyMatrix()
+        {
+            // Arrange
+            var graph = new GraphADP<int>();
+            graph.ReadAdjacencyMatrixWeightedInt(DataSetGraphHelper.verbindingsmatrix_gewogen);
+
+            var startValue = 0;
+            var endValue = 3;
+
+            // Act
+            var result = DijkstraShortestPathAlgorithm<int>.DijkstraShortestPath(graph, startValue, endValue);
+
+            // Assert
+
+        }
+
+        // The time complexity of the algorithm is O(V + E) * O(log V)
+        // V for the Vertices and E for the edges of the Vertices
+        // The O(log V) are the operations of the priority queue due to it using an heap
+        [Fact]
+        public void TestDijkstraShortestPathEdgeList()
+        {
+            // Arrange
+            var graph = new GraphADP<int>();
+            graph.ReadEdgeListWeightedInt(DataSetGraphHelper.lijnlijst_gewogen);
+
+            var startValue = 0;
+            var endValue = 4;
+
+            // Act
+            var result = DijkstraShortestPathAlgorithm<int>.DijkstraShortestPath(graph, startValue, endValue);
+
+            // Assert
+
+        }
+
         public static IEnumerable<object[]> DataStringWeighted()
         {
             yield return new object[] { DataSetGraphHelper.Dijkstra1, "S", "E", 1 };
@@ -101,11 +144,11 @@ namespace ADP.Tests.Algorithms.DijkstraShortestPath
             yield return new object[] { DataSetGraphHelper.Dijkstra3, "S", "E", 3 };
         }
 
-        public static IEnumerable<object[]> DataWeighted()
+        public static IEnumerable<object[]> DataAdjacencyListWeighted()
         {
-            yield return new object[] { DataSetGraphHelper.LijstGewogen1, 0, 3};
-            yield return new object[] { DataSetGraphHelper.LijstGewogen2, 0, 6 };
-            yield return new object[] { DataSetGraphHelper.LijstGewogen3, 0 ,10 };
+            yield return new object[] { DataSetGraphHelper.verbindingslijst_gewogen1, 0, 3};
+            yield return new object[] { DataSetGraphHelper.verbindingslijst_gewogen2, 0, 6 };
+            yield return new object[] { DataSetGraphHelper.verbindingslijst_gewogen3, 0 ,10 };
         }
     }
 }

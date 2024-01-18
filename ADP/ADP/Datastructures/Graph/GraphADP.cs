@@ -30,7 +30,7 @@ public class GraphADP<T>
         }
     }
 
-    public void AddEdge(T sourceVertexValue, T destinationVertexValue, int weight = -1)
+    public void AddEdge(T sourceVertexValue, T destinationVertexValue, int weight = 0)
     {
         if (!AdjacencyList.ContainsKey(sourceVertexValue))
         {

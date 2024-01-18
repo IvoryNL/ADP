@@ -40,7 +40,7 @@ namespace ADP.Algorithms
                     var destinationVertex = edge.DestinationVertext;
                     if (!visitedVertices.Contains(destinationVertex.Value))
                     {
-                        var distanceFromCurrentVertex = edge.Weight >= 0 ? currentVertex.Distance + edge.Weight : currentVertex.Distance + 1;
+                        var distanceFromCurrentVertex = edge.Weight > 0 ? currentVertex.Distance + edge.Weight : currentVertex.Distance + 1;
 
                         if (destinationVertex.Distance > distanceFromCurrentVertex)
                         {

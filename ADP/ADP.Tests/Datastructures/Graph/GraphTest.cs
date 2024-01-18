@@ -1,7 +1,8 @@
 ﻿using Xunit.Abstractions;
 using System.Diagnostics;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 using ADP.Datastructures.Graph;
+using ADP.Datastructures.Graph.Helpers;
+using ADP.Algorithms;
 
 namespace ADP.Tests.Datastructures.Graph;
 
@@ -16,11 +17,13 @@ public class GraphTest
 
     // The time complexity is O(1)
     [Theory]
-    [MemberData(nameof(DataUnweighted))]
+    [MemberData(nameof(AdjacencyListUnweighted))]
     public void TestInsertVertexUnweightedPerformance(int[][] input)
     {
         // Arrange
-        var graph = GenerateGraphUnweighted(input);
+        var graph = new GraphADP<int>();
+        graph.ReadAdjacencyListUnweightedInt(input);
+
         var valueToInsert = input.Length;
         var stopwatch = new Stopwatch();
 
@@ -41,11 +44,13 @@ public class GraphTest
 
     // The time conplexity O(V + E)
     [Theory]
-    [MemberData(nameof(DataUnweighted))]
+    [MemberData(nameof(AdjacencyListUnweighted))]
     public void TestRemoveVertexUnweightedPerformance(int[][] input)
     {
         // Arrange
-        var graph = GenerateGraphUnweighted(input);
+        var graph = new GraphADP<int>();
+        graph.ReadAdjacencyListUnweightedInt(input);
+
         var stopwatch = new Stopwatch();
 
         var edgesToRemove = new int[] { 4, 5, 6 };
@@ -70,11 +75,13 @@ public class GraphTest
 
     // The time complexity is O(1)
     [Theory]
-    [MemberData(nameof(DataUnweighted))]
+    [MemberData(nameof(AdjacencyListUnweighted))]
     public void TestInsertEdgeUnweightedPerformance(int[][] input)
     {
         // Arrange
-        var graph = GenerateGraphUnweighted(input);
+        var graph = new GraphADP<int>();
+        graph.ReadAdjacencyListUnweightedInt(input);
+
         var valueToInsert = input.Length;
         graph.AddVertex(valueToInsert);
         var edgeToInsert = 3;
@@ -97,11 +104,13 @@ public class GraphTest
 
     // The time conplexity O(V + E)
     [Theory]
-    [MemberData(nameof(DataUnweighted))]
+    [MemberData(nameof(AdjacencyListUnweighted))]
     public void TestRemoveEdgeUnweightedPerformance(int[][] input)
     {
         // Arrange
-        var graph = GenerateGraphUnweighted(input);
+        var graph = new GraphADP<int>();
+        graph.ReadAdjacencyListUnweightedInt(input);
+
         var stopwatch = new Stopwatch();
 
         var edgesToRemove = new int[] { 4, 5, 6 };
@@ -130,11 +139,13 @@ public class GraphTest
 
     // The time complexity is O(1)
     [Theory]
-    [MemberData(nameof(DataWeighted))]
+    [MemberData(nameof(AdjacencyListWeighted))]
     public void TestInsertVertexWeightedPerformance(int[][][] input)
     {
         // Arrange
-        var graph = GenerateGraphWeighted(input);
+        var graph = new GraphADP<int>();
+        graph.ReadAdjacencyListWeightedInt(input);
+
         var valueToInsert = input.Length;
         var stopwatch = new Stopwatch();
 
@@ -156,11 +167,13 @@ public class GraphTest
 
     // The time conplexity O(V + E)
     [Theory]
-    [MemberData(nameof(DataWeighted))]
+    [MemberData(nameof(AdjacencyListWeighted))]
     public void TestRemoveVertexWeightedPerformance(int[][][] input)
     {
         // Arrange
-        var graph = GenerateGraphWeighted(input);
+        var graph = new GraphADP<int>();
+        graph.ReadAdjacencyListWeightedInt(input);
+
         var stopwatch = new Stopwatch();
 
         var verticesToRemove = new int[] { 0, 2, 3 };
@@ -185,11 +198,13 @@ public class GraphTest
 
     // The time complexity is O(1)
     [Theory]
-    [MemberData(nameof(DataWeighted))]
+    [MemberData(nameof(AdjacencyListWeighted))]
     public void TestInsertEdgeWeightedPerformance(int[][][] input)
     {
         // Arrange
-        var graph = GenerateGraphWeighted(input);
+        var graph = new GraphADP<int>();
+        graph.ReadAdjacencyListWeightedInt(input);
+
         var valueToInsert = input.Length;
         graph.AddVertex(valueToInsert);
         var edgeToInsert = new int[] { 3, 50 };
@@ -211,11 +226,13 @@ public class GraphTest
     }
     // The time conplexity O(V + E)
     [Theory]
-    [MemberData(nameof(DataWeighted))]
+    [MemberData(nameof(AdjacencyListWeighted))]
     public void TestRemoveEdgeWeightedPerformance(int[][][] input)
     {
         // Arrange
-        var graph = GenerateGraphWeighted(input);
+        var graph = new GraphADP<int>();
+        graph.ReadAdjacencyListWeightedInt(input);
+
         var stopwatch = new Stopwatch();
 
         var edgesToRemove = new int[] { 0, 2, 3 };
@@ -242,62 +259,81 @@ public class GraphTest
 
     }
 
-    private GraphADP<int> GenerateGraphUnweighted(int[][] data)
+    [Fact]
+    public void TestRemoveVertexAdjacencyMatrixWeighted()
     {
+        // Arrange
         var graph = new GraphADP<int>();
+        graph.ReadAdjacencyMatrixWeightedInt(DataSetGraphHelper.verbindingsmatrix_gewogen);
 
-        for (var i = 0; i < data.Length; i++)
-        {
-            var vertexData = i;
-            graph.AddVertex(vertexData);
-        }
+        var vertexToRemove = 3;
 
-        for (var i = 0; i < data.Length; i++)
-        {
-            for (var j = 0;  j < data[i].Length; j++)
-            {
-                var vertexData = i;
-                var edgeData = data[i][j];
-                graph.AddEdge(vertexData, edgeData);
-            }
-        }
+        // Act
+        graph.RemoveVertex(vertexToRemove);
 
-        return graph;
+        // Assert
+
     }
 
-    private GraphADP<int> GenerateGraphWeighted(int[][][] data)
+    [Fact]
+    public void TestRemoveVertexAdjacencyMatrixUnweighted()
     {
+        // Arrange
         var graph = new GraphADP<int>();
+        graph.ReadAdjacencyMatrixWeightedInt(DataSetGraphHelper.verbindingsmatrix);
 
-        for (var i = 0; i < data.Length; i++)
-        {
-            var vertexData = i;
-            graph.AddVertex(vertexData);
-        }
+        var vertexToRemove = 3;
 
-        for (var i = 0; i < data.Length; i++)
-        {
-            for (var j = 0; j < data[i].Length; j++)
-            {
-                var vertexData = i;
-                var edgeData = data[i][j];
-                graph.AddEdge(vertexData, edgeData[0], edgeData[1]);
-            }
-        }
+        // Act
+        graph.RemoveVertex(vertexToRemove);
 
-        return graph;
-    }
-    public static IEnumerable<object[]> DataUnweighted()
-    {
-        yield return new object[] { DataSetGraphHelper.lijstOngewogen1 };
-        yield return new object[] { DataSetGraphHelper.lijstOngewogen2 };
-        yield return new object[] { DataSetGraphHelper.lijstOngewogen3 };
+        // Assert
+
     }
 
-    public static IEnumerable<object[]> DataWeighted()
+    [Fact]
+    public void TestRemoveVertexEdgeListUnweighted()
     {
-        yield return new object[] { DataSetGraphHelper.LijstGewogen1 };
-        yield return new object[] { DataSetGraphHelper.LijstGewogen2 };
-        yield return new object[] { DataSetGraphHelper.LijstGewogen3 };
+        // Arrange
+        var graph = new GraphADP<int>();
+        graph.ReadEdgeListUnweightedInt(DataSetGraphHelper.lijnlijst);
+
+        var vertexToRemove = 3;
+
+        // Act
+        graph.RemoveVertex(vertexToRemove);
+
+        // Assert
+
+    }
+
+    [Fact]
+    public void TestRemoveVertexEdgeListWeighted()
+    {
+        // Arrange
+        var graph = new GraphADP<int>();
+        graph.ReadEdgeListUnweightedInt(DataSetGraphHelper.lijnlijst_gewogen);
+
+        var vertexToRemove = 3;
+
+        // Act
+        graph.RemoveVertex(vertexToRemove);
+
+        // Assert
+
+    }
+
+    public static IEnumerable<object[]> AdjacencyListUnweighted()
+    {
+        yield return new object[] { DataSetGraphHelper.verbindingslijst1 };
+        yield return new object[] { DataSetGraphHelper.verbindingslijst2 };
+        yield return new object[] { DataSetGraphHelper.verbindingslijst3 };
+    }
+
+    public static IEnumerable<object[]> AdjacencyListWeighted()
+    {
+        yield return new object[] { DataSetGraphHelper.verbindingslijst_gewogen1 };
+        yield return new object[] { DataSetGraphHelper.verbindingslijst_gewogen2 };
+        yield return new object[] { DataSetGraphHelper.verbindingslijst_gewogen3 };
     }
 }
